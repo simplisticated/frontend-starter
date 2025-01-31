@@ -13,7 +13,7 @@ class Analytics {
 
     public trackEvent(
         event: string,
-        data: {
+        data?: {
             [id: string]: any;
         }
     ) {
