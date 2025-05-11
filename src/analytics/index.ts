@@ -3,15 +3,15 @@ import initializeMixpanel from "./mixpanel";
 class Analytics {
     private mixpanel = initializeMixpanel();
 
-    public identifyUser(id: string) {
+    public identify(id: string) {
         this.mixpanel?.identify(id);
     }
 
-    public setUserData(data: Partial<UserData>) {
+    public userData(data: Partial<UserData>) {
         this.mixpanel?.people.set(data);
     }
 
-    public trackEvent(
+    public event(
         event: string,
         data?: {
             [id: string]: any;
