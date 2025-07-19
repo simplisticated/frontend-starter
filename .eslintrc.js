@@ -1,60 +1,29 @@
 module.exports = {
     root: true,
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        project: "./tsconfig.json",
+        tsconfigRootDir: __dirname,
+    },
+    plugins: ["@typescript-eslint", "react", "react-hooks"],
     extends: [
-        "airbnb",
+        "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:react/jsx-runtime",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
         "prettier",
     ],
-    plugins: ["@typescript-eslint"],
     rules: {
-        "import/extensions": [
-            "error",
-            {
-                js: "never",
-                jsx: "never",
-                ts: "never",
-                tsx: "never",
-                json: "always",
-                png: "always",
-                svg: "always",
-                jpeg: "always",
-                jpg: "always",
-            },
-        ],
-        "import/no-unresolved": "off",
-        "react/jsx-filename-extension": [
-            "error",
-            {
-                extensions: [".jsx", ".tsx"],
-            },
-        ],
-        "react/function-component-definition": [
-            "error",
-            {
-                namedComponents: ["function-declaration"],
-            },
-        ],
-        "react/destructuring-assignment": ["error", "never"],
-        "react/require-default-props": "off",
-        "no-console": "off",
-        "no-use-before-define": "off",
-        "no-shadow": "off",
-        "@typescript-eslint/no-shadow": "error",
-        "no-underscore-dangle": [
-            "error",
-            {
-                allowAfterThis: true,
-            },
-        ],
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off",
         "@typescript-eslint/no-explicit-any": "off",
-        "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": "error",
     },
     ignorePatterns: [
         "build/",
+        "package-scripts/",
+        ".eslintrc.js",
+        "jest.config.js",
         "node_modules/",
         "public/libraries/",
-        "commands/",
     ],
 };

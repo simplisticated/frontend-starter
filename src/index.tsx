@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { v4 as uuidv4 } from "uuid";
 import { APP_CONFIGURATION } from "./app/configuration";
-import { AppEnvironment, CURRENT_ENVIRONMENT } from "./app/environment";
 import App from "./components/app/App";
 import reportWebVitals from "./reportWebVitals";
 import LOCAL_STORAGE from "./data/store/local-storage";
@@ -34,14 +33,11 @@ function getOrCreateUserIdentifier(): string {
     return userIdentifier;
 }
 
+// eslint-disable-next-line react/no-deprecated
 ReactDOM.render(
     <React.StrictMode>{renderApp()}</React.StrictMode>,
     document.getElementById("root")
 );
-
-if (CURRENT_ENVIRONMENT !== AppEnvironment.production) {
-    document.title = `${CURRENT_ENVIRONMENT} environment`;
-}
 
 const userIdentifier = getOrCreateUserIdentifier();
 ANALYTICS.identify(userIdentifier);

@@ -1,35 +1,15 @@
-import HeaderView from "../../views/header/HeaderView";
+import { useEffect } from "react";
+import ANALYTICS from "../../../analytics";
+import PageWrapper from "../../page-wrapper/PageWrapper";
+
+export const MAIN_PAGE_URL = "/";
+
+export const MAIN_PAGE_IDENTIFIER = "main";
 
 export default function MainPage() {
-    return (
-        <>
-            <HeaderView />
-            <main>
-                <div className="container-fluid">
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td colSpan={1}>Test</td>
-                                <td colSpan={1}>Test</td>
-                            </tr>
-                            <tr>
-                                <th>2</th>
-                                <td colSpan={1}>Test</td>
-                                <td colSpan={1}>Test</td>
-                            </tr>
-                        </tbody>
-                        <tfoot />
-                    </table>
-                </div>
-            </main>
-        </>
-    );
+    const main = <h1>Главная страница</h1>;
+    useEffect(() => {
+        ANALYTICS.pageView(MAIN_PAGE_IDENTIFIER);
+    }, []);
+    return <PageWrapper insideMain={main} />;
 }
