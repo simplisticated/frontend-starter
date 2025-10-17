@@ -13,12 +13,6 @@ export const getAppConfiguration = (
     api: {
         baseUrl: "",
     },
-    externalServices: {
-        exampleService: {
-            enabled: false,
-            apiKey: "",
-        },
-    },
 });
 
 export const APP_CONFIGURATION = getAppConfiguration(CURRENT_ENVIRONMENT);
