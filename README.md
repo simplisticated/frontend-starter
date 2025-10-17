@@ -22,6 +22,13 @@
 
 ## Environment Variables
 
+### `REACT_APP_ENVIRONMENT`
+
+Possible values: `production`, `test`, `local`.
+
+This value affects the settings and behavior of the app, including internal
+configuration and interaction with external services.
+
 ### `GENERATE_SOURCEMAP`
 
 Set it to `false` for preventing error messages regarding source maps.
@@ -45,6 +52,7 @@ Telegram message recipients.
 Usually, your `.env` file's content should look like:
 
 ```
+REACT_APP_ENVIRONMENT=local
 GENERATE_SOURCEMAP=false
 REACT_APP_MIXPANEL_API_KEY=
 REACT_APP_CONTACT_EMAIL=
