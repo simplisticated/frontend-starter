@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import { isAppEnvironment } from "./app-environment";
+
 function getString(key: string): string | null {
     return process.env[key] ?? null;
 }
@@ -37,21 +39,6 @@ function getNumberList(key: string, divider: string = ","): number[] | null {
         })
         .filter(value => value !== null);
 }
-
-export enum AppEnvironment {
-    production = "production",
-    test = "test",
-    local = "local",
-}
-
-const isAppEnvironment = (value: any): value is AppEnvironment => {
-    if (typeof value === "string") {
-        return Object.values(AppEnvironment)
-            .map(el => el.toString())
-            .includes(value);
-    }
-    return false;
-};
 
 export const ENV = {
     CURRENT_ENVIRONMENT: (() => {

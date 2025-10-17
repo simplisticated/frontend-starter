@@ -3,7 +3,7 @@ import NotFoundPage from "../pages/not-found/NotFoundPage";
 import MainPage from "../pages/main/MainPage";
 import { Helmet } from "react-helmet";
 import ErrorBoundary from "../error/ErrorBoundary";
-import { AppEnvironment, ENV } from "../../app/environment";
+import { AppEnvironment, ENV } from "../../app/env";
 
 export default function App() {
     const content = (
