@@ -4,10 +4,10 @@ class LocalStorage {
     private store = S.local;
 
     public get userIdentifier(): string | null {
-        return this.store.get(LocalStorageKey.userIdentifier);
+        return this.store.get(LocalStorageKey.userIdentifier) ?? null;
     }
 
-    public set userIdentifier(value: string | null) {
+    public set userIdentifier(value: string) {
         this.store.set(LocalStorageKey.userIdentifier, value);
     }
 }

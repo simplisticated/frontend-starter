@@ -1,13 +1,14 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
 
 export default class ExampleApi {
-    // eslint-disable-next-line class-methods-use-this
-    private getClient() {
-        return axios.create();
+    private client: AxiosInstance;
+
+    constructor() {
+        this.client = axios.create();
     }
 
     async exampleRequest() {
-        const result = await this.getClient().get("");
+        const result = await this.client.get("");
         return result.data;
     }
 }

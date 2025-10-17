@@ -1,8 +1,8 @@
 import mixpanel, { Mixpanel } from "mixpanel-browser";
+import { ENV } from "../app/environment";
 
 export default function initializeMixpanel(): Mixpanel | null {
-    const mixpanelApiKey = process.env.REACT_APP_MIXPANEL_API_KEY;
-    if (!mixpanelApiKey) return null;
-    mixpanel.init(mixpanelApiKey);
+    if (!ENV.MIXPANEL_API_KEY) return null;
+    mixpanel.init(ENV.MIXPANEL_API_KEY);
     return mixpanel;
 }

@@ -2,8 +2,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NotFoundPage from "../pages/not-found/NotFoundPage";
 import MainPage from "../pages/main/MainPage";
 import { Helmet } from "react-helmet";
-import { CURRENT_ENVIRONMENT, AppEnvironment } from "../../app/environment";
 import ErrorBoundary from "../error/ErrorBoundary";
+import { AppEnvironment, ENV } from "../../app/environment";
 
 export default function App() {
     const content = (
@@ -19,8 +19,8 @@ export default function App() {
                 </Switch>
             </BrowserRouter>
             <Helmet>
-                {CURRENT_ENVIRONMENT !== AppEnvironment.production && (
-                    <title>{CURRENT_ENVIRONMENT} environment</title>
+                {ENV.CURRENT_ENVIRONMENT !== AppEnvironment.production && (
+                    <title>{ENV.CURRENT_ENVIRONMENT} environment</title>
                 )}
             </Helmet>
         </>

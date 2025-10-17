@@ -1,18 +1,12 @@
-import { AppEnvironment, CURRENT_ENVIRONMENT } from "./environment";
-
-export const getAppConfiguration = (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    environment: AppEnvironment
-) => ({
+/**
+ * Набор гибко изменяемых значений, которые, в отличие от переменных окружения,
+ * действуют для всех сборок продукта.
+ */
+export const APP_CONFIGURATION = {
     app: {
         iFrameContainer: {
             isEnabled: false,
             placeholder: undefined,
         },
     },
-    api: {
-        baseUrl: "",
-    },
-});
-
-export const APP_CONFIGURATION = getAppConfiguration(CURRENT_ENVIRONMENT);
+};

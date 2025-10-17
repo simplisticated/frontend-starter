@@ -4,9 +4,8 @@
     "private": true,
     "scripts": {
         "build": "node ./package_scripts/delete-build-folder.js && react-scripts build",
-        "build:production": "REACT_APP_ENVIRONMENT=production npm run build",
         "start": "serve -s build -l 3000",
-        "start:typescript": "react-scripts start",
+        "start:dev": "react-scripts start",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "lint": "eslint . && prettier --check .",

@@ -4,7 +4,6 @@ export default function PageWrapper(props: Props) {
     return (
         <>
             <HeaderView />
-            {/* <main className="pt-32 px-4 pb-10">{props.insideMain}</main> */}
             <main className="pt-[180px] md:pt-32 px-4 pb-10">
                 {props.insideMain}
             </main>
