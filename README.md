@@ -30,7 +30,7 @@ Possible values:
 - `internal` — for internal team testing
 - `local` — for running the app locally
 
-This value affects the settings and behavior of the app, including internal
+This variable affects the settings and behavior of the app, including internal
 configuration and interaction with external services. Depending on the project's
 context, the set of values can be easily extended.
 
@@ -43,6 +43,8 @@ Set it to `false` for preventing error messages regarding source maps.
 Add Mixpanel API key here. It will be automatically used by `ANALYTICS` object.
 
 ### `REACT_APP_CONTACT_EMAIL`
+
+Email address for contact or feedback purposes.
 
 ### `REACT_APP_TELEGRAM_TOKEN`
 
