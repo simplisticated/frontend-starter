@@ -20,7 +20,7 @@ module.exports = {
     },
     ignorePatterns: [
         "build/",
-        "package-scripts/",
+        "package_scripts/",
         ".eslintrc.js",
         "jest.config.js",
         "node_modules/",
