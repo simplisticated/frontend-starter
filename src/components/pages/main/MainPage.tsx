@@ -7,6 +7,9 @@ export const MAIN_PAGE_URL = "/";
 export const MAIN_PAGE_IDENTIFIER = "main";
 
 export default function MainPage() {
+    useEffect(() => {
+        throw new Error("Test error");
+    }, []);
     const main = (
         <div className="max-w-3xl mx-auto text-gray-200 space-y-8">
             <h1 className="text-3xl font-bold text-yellow-500 mb-4">

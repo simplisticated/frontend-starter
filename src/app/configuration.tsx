@@ -7,10 +7,7 @@ function getAppConfiguration(
 ) {
     return {
         app: {
-            iFrameContainer: {
-                isEnabled: false,
-                placeholder: undefined,
-            },
+            iFrameEnabled: false,
         },
     };
 }

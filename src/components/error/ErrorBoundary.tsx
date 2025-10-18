@@ -51,7 +51,13 @@ export default class ErrorBoundary extends Component<Props, State> {
     componentDidCatch(error: Error, errorInformation: React.ErrorInfo) {
         console.error(error, errorInformation);
         sendMessageToTelegramBot(
-            `Error: ${location.href} ${error} ${JSON.stringify(errorInformation)}`
+            `
+                Client error
+                URL: ${location.href}
+                Message: ${error.message}
+                Cause: ${error.cause}
+                Stack: ${errorInformation.componentStack}
+            `.replace(/^[ \t]+/gm, "")
         );
     }
 

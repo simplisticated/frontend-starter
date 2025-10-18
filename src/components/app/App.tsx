@@ -1,16 +1,18 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NotFoundPage from "../pages/not-found/NotFoundPage";
-import MainPage from "../pages/main/MainPage";
+import MainPage, { MAIN_PAGE_URL } from "../pages/main/MainPage";
 import { Helmet } from "react-helmet";
 import ErrorBoundary from "../error/ErrorBoundary";
-import { AppEnvironment, ENV } from "../../app/env";
+import { ENV } from "../../app/env";
+import { AppEnvironment } from "../../app/app-environment";
+import { APP_CONFIGURATION } from "../../app/configuration";
 
-export default function App() {
+function Content() {
     const content = (
         <>
             <BrowserRouter>
                 <Switch>
-                    <Route exact path="/">
+                    <Route exact path={MAIN_PAGE_URL}>
                         <MainPage />
                     </Route>
                     <Route>
@@ -26,4 +28,22 @@ export default function App() {
         </>
     );
     return <ErrorBoundary content={content} />;
+}
+
+function Placeholder() {
+    return <div>iFrame is not allowed</div>;
+}
+
+export default function App() {
+    const isIFrame = (() => {
+        try {
+            return window.self !== window.top;
+        } catch {
+            return true;
+        }
+    })();
+    if (isIFrame && !APP_CONFIGURATION.app.iFrameEnabled) {
+        return <Placeholder />;
+    }
+    return <Content />;
 }

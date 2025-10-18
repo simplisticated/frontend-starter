@@ -1,25 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { v4 as uuidv4 } from "uuid";
-import { APP_CONFIGURATION } from "./app/configuration";
 import reportWebVitals from "./reportWebVitals";
 import LOCAL_STORAGE from "./data/store/local-storage";
 import ANALYTICS from "./analytics";
 import STORE from "./data/store/store";
-import App from "./components/app/App";
-
-function renderApp() {
-    const isIFrame = window.self !== window.top;
-
-    if (isIFrame) {
-        return APP_CONFIGURATION.app.iFrameContainer.isEnabled ? (
-            <App />
-        ) : (
-            APP_CONFIGURATION.app.iFrameContainer.placeholder
-        );
-    }
-    return <App />;
-}
+import Content from "./components/app/App";
 
 function getOrCreateUserIdentifier(): string {
     const existingUserIdentifier = LOCAL_STORAGE.userIdentifier;
@@ -36,7 +22,9 @@ function getOrCreateUserIdentifier(): string {
 
 // eslint-disable-next-line react/no-deprecated
 ReactDOM.render(
-    <React.StrictMode>{renderApp()}</React.StrictMode>,
+    <React.StrictMode>
+        <Content />
+    </React.StrictMode>,
     document.getElementById("root")
 );
 
