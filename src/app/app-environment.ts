@@ -1,6 +1,6 @@
 export enum AppEnvironment {
     production = "production",
-    test = "test",
+    internal = "internal",
     local = "local",
 }
 

@@ -24,10 +24,15 @@
 
 ### `REACT_APP_ENVIRONMENT`
 
-Possible values: `production`, `test`, `local`.
+Possible values:
+
+- `production` — official production build
+- `internal` — for internal team testing
+- `local` — for running the app locally
 
 This value affects the settings and behavior of the app, including internal
-configuration and interaction with external services.
+configuration and interaction with external services. Depending on the project's
+context, the set of values can be easily extended.
 
 ### `GENERATE_SOURCEMAP`
 
