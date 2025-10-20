@@ -1,4 +1,4 @@
-# React Starter
+# Frontend Starter
 
 ## Requirements
 
@@ -22,7 +22,8 @@
 
 ## Deployment
 
-For Cloudflare Pages, use the following settings:
+For [Cloudflare Pages](https://pages.cloudflare.com), use the following
+settings:
 
 - Build command: `npx react-scripts build`
 - Build output directory: `build`
