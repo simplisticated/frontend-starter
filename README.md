@@ -20,6 +20,16 @@
   version locally by using `npm run start`
 - You're all set!
 
+## Deployment
+
+For Cloudflare Pages, use the following settings:
+
+- Build command: `npx react-scripts build`
+- Build output directory: `build`
+- Add environment variable `NPM_FLAGS` with the value `--force` in addition to
+  the regular set of variables. It helps prevent build errors caused by strict
+  dependency checks or outdated packages.
+
 ## Environment Variables
 
 ### `REACT_APP_ENVIRONMENT`
