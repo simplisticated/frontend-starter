@@ -6,11 +6,16 @@ export async function sendMessageToTelegramBot(
         format: "MarkdownV2" | "HTML";
     }
 ) {
-    const recipients = ENV.TELEGRAM_RECIPIENT_IDENTIFIERS;
-    if (!recipients || !recipients.length) return;
+    if (
+        !ENV.TELEGRAM_TOKEN ||
+        !ENV.TELEGRAM_RECIPIENT_IDENTIFIERS ||
+        !ENV.TELEGRAM_RECIPIENT_IDENTIFIERS.length
+    ) {
+        return;
+    }
 
-    for (const id of recipients) {
-        const url = `https://api.telegram.org/bot${process.env.REACT_APP_TELEGRAM_TOKEN}/sendMessage?chat_id=${id}&text=${encodeURIComponent(message)}${configuration?.format ? `&parse_mode=${configuration.format}` : ""}`;
+    for (const id of ENV.TELEGRAM_RECIPIENT_IDENTIFIERS) {
+        const url = `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${id}&text=${encodeURIComponent(message)}${configuration?.format ? `&parse_mode=${configuration.format}` : ""}`;
         await fetch(url, {
             method: "GET",
         });
