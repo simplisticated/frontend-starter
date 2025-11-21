@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import ANALYTICS from "../../../analytics";
+import ANALYTICS from "../../../app/analytics";
 import { MAIN_PAGE_URL } from "../main/MainPage";
 
 export const NOT_FOUND_PAGE_IDENTIFIER = "not-found";
@@ -9,7 +9,6 @@ export default function NotFoundPage() {
     useEffect(() => {
         ANALYTICS.pageView(NOT_FOUND_PAGE_IDENTIFIER);
     }, []);
-
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 px-4 text-white">
             {/* 404 Icon */}

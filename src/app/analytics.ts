@@ -1,24 +1,15 @@
-import initializeMixpanel from "./mixpanel";
+import axios from "axios";
 
 class Analytics {
-    private mixpanel = initializeMixpanel();
-
-    public identify(id: string) {
-        this.mixpanel?.identify(id);
-    }
-
-    public userData(data: Partial<UserData>) {
-        this.mixpanel?.people.set(data);
-    }
-
-    public event(
+    public async event(
         event: string,
         data?: {
             [id: string]: any;
         }
     ) {
-        this.mixpanel?.track(event, data, {
-            send_immediately: true,
+        axios.post("https://analytics.best-production.workers.dev/event", {
+            event,
+            data,
         });
     }
 
@@ -37,7 +28,3 @@ class Analytics {
 
 const ANALYTICS = new Analytics();
 export default ANALYTICS;
-
-type UserData = {
-    exampleValue: string;
-};

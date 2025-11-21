@@ -1,4 +1,4 @@
-import ANALYTICS from "../../../analytics";
+import ANALYTICS from "../../../app/analytics";
 
 export default function ExternalLink(props: Props) {
     const clickHandler = () => {

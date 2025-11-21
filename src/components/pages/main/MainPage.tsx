@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import ANALYTICS from "../../../analytics";
+import ANALYTICS from "../../../app/analytics";
 import PageWrapper from "../../page-wrapper/PageWrapper";
 
 export const MAIN_PAGE_URL = "/";
