@@ -49,10 +49,4 @@ export const ENV = {
         }
         return value;
     })(),
-    MIXPANEL_API_KEY: getString("REACT_APP_MIXPANEL_API_KEY"),
-    CONTACT_EMAIL: getString("REACT_APP_CONTACT_EMAIL"),
-    TELEGRAM_TOKEN: getString("REACT_APP_TELEGRAM_TOKEN"),
-    TELEGRAM_RECIPIENT_IDENTIFIERS: getNumberList(
-        "REACT_APP_TELEGRAM_RECIPIENT_IDENTIFIERS"
-    ),
 };

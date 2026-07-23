@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { sendMessageToTelegramBot } from "../../tools/telegram";
 
 function ErrorPage() {
     return (
@@ -50,15 +49,7 @@ export default class ErrorBoundary extends Component<Props, State> {
 
     componentDidCatch(error: Error, errorInformation: React.ErrorInfo) {
         console.error(error, errorInformation);
-        sendMessageToTelegramBot(
-            `
-                Client error
-                URL: ${location.href}
-                Message: ${error.message}
-                Cause: ${error.cause}
-                Stack: ${errorInformation.componentStack}
-            `.replace(/^[ \t]+/gm, "")
-        );
+        // Send report
     }
 
     render() {
