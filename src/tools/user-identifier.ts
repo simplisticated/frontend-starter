@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
 import { readFromStorage, writeToStorage } from "./local-storage";
+import { LocalStorageKey } from "../data/store/local-storage";
 
 export function getOrCreateUserIdentifier(): string {
     const existingUserIdentifier = readFromStorage<string>(
         localStorage,
-        "user-identifier"
+        LocalStorageKey.userIdentifier
     );
     if (existingUserIdentifier) return existingUserIdentifier;
 
@@ -13,6 +14,10 @@ export function getOrCreateUserIdentifier(): string {
         const timestamp = new Date().getTime();
         return `${value}${timestamp}`;
     })();
-    writeToStorage(localStorage, "user-identifier", userIdentifier);
+    writeToStorage(
+        localStorage,
+        LocalStorageKey.userIdentifier,
+        userIdentifier
+    );
     return userIdentifier;
 }
