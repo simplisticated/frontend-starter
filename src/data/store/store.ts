@@ -2,16 +2,16 @@ import { computed, makeObservable, observable, runInAction } from "mobx";
 
 class Store {
     @observable
-    public _isPageHidden: boolean = false;
+    public _example: string = "example";
 
     @computed
-    public get isPageHidden() {
-        return this._isPageHidden;
+    public get example() {
+        return this._example;
     }
 
-    public set isPageHidden(hidden: boolean) {
+    public set example(value: string) {
         runInAction(() => {
-            this._isPageHidden = hidden;
+            this._example = value;
         });
     }
 

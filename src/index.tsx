@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import STORE from "./data/store/store";
-import Content from "./components/app/App";
+import App from "./components/app/App";
 
 // eslint-disable-next-line react/no-deprecated
 ReactDOM.render(
     <React.StrictMode>
-        <Content />
+        <App />
     </React.StrictMode>,
     document.getElementById("root")
 );
