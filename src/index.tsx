@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import STORE from "./data/store/store";
 import Content from "./components/app/App";
-import { getOrCreateUserIdentifier } from "./tools/user-identifier";
 
 // eslint-disable-next-line react/no-deprecated
 ReactDOM.render(
@@ -16,8 +15,6 @@ ReactDOM.render(
 document.addEventListener("visibilitychange", () => {
     STORE.isPageHidden = document.visibilityState === "hidden";
 });
-
-getOrCreateUserIdentifier();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

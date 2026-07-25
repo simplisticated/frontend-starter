@@ -45,25 +45,15 @@ function writeToStorage<Value>(
 
 type StorageListener<Value> = (value: Value | null) => void;
 
-class StorageSyncRegistry {
-    private static instance: StorageSyncRegistry | null = null;
-    private listeners = new Map<string, Set<StorageListener<unknown>>>();
-
-    private constructor() {}
-
-    static getInstance(): StorageSyncRegistry {
-        if (!StorageSyncRegistry.instance) {
-            StorageSyncRegistry.instance = new StorageSyncRegistry();
-        }
-        return StorageSyncRegistry.instance;
-    }
+const STORAGE_SYNC_MANAGER = {
+    listeners: new Map<string, Set<StorageListener<unknown>>>(),
 
     subscribe<Value>(
         storageType: "local" | "session",
         key: string,
         listener: StorageListener<Value>
-    ): () => void {
-        const targetKey = this.getTargetKey(storageType, key);
+    ) {
+        const targetKey = `${storageType}:${key}`;
         const listeners =
             this.listeners.get(targetKey) ??
             new Set<StorageListener<unknown>>();
@@ -76,30 +66,28 @@ class StorageSyncRegistry {
                 this.listeners.delete(targetKey);
             }
         };
-    }
+    },
 
     notify<Value>(
         storageType: "local" | "session",
         key: string,
         value: Value | null
-    ): void {
-        const targetKey = this.getTargetKey(storageType, key);
+    ) {
+        const targetKey = `${storageType}:${key}`;
         const listeners = this.listeners.get(targetKey);
         listeners?.forEach(listener => listener(value));
-    }
+    },
+};
 
-    private getTargetKey(
-        storageType: "local" | "session",
-        key: string
-    ): string {
-        return `${storageType}:${key}`;
-    }
-}
+type ValueSetterParameter<Value> =
+    | Value
+    | null
+    | ((previousValue: Value | null) => Value | null);
 
 function useStorage<Value = string>(
     storageType: "local" | "session",
     key: string
-): [Value | null, (value: Value | null) => boolean] {
+): [Value | null, (value: ValueSetterParameter<Value>) => boolean] {
     const storage = (() => {
         if (typeof window === "undefined") return null;
         switch (storageType) {
@@ -117,19 +105,25 @@ function useStorage<Value = string>(
         return readFromStorage(storage, key);
     });
 
-    const setValue = (value: Value | null): boolean => {
+    const setValue = (value: ValueSetterParameter<Value>): boolean => {
         if (!storage) return false;
-        const result = writeToStorage(storage, key, value);
+
+        const nextValue =
+            typeof value === "function"
+                ? (value as (previousValue: Value | null) => Value | null)(data)
+                : value;
+
+        const result = writeToStorage(storage, key, nextValue);
         if (!result) return false;
-        setData(value);
-        StorageSyncRegistry.getInstance().notify(storageType, key, value);
+        setData(nextValue);
+        STORAGE_SYNC_MANAGER.notify(storageType, key, nextValue);
         return true;
     };
 
     useEffect(() => {
         if (!storage) return;
 
-        const unsubscribe = StorageSyncRegistry.getInstance().subscribe(
+        const unsubscribe = STORAGE_SYNC_MANAGER.subscribe(
             storageType,
             key,
             (nextValue: Value | null) => {
