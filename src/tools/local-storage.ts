@@ -15,7 +15,10 @@ function isItem(obj: any): obj is Item<any> {
     return false;
 }
 
-function readFromStorage<Value>(storage: Storage, key: string): Value | null {
+export function readFromStorage<Value>(
+    storage: Storage,
+    key: string
+): Value | null {
     try {
         const data = storage.getItem(key);
         if (typeof data !== "string") return null;
@@ -26,7 +29,7 @@ function readFromStorage<Value>(storage: Storage, key: string): Value | null {
     }
 }
 
-function writeToStorage<Value>(
+export function writeToStorage<Value>(
     storage: Storage,
     key: string,
     value: Value | null
