@@ -7,7 +7,7 @@ function getAppConfiguration(
 ) {
     return {
         app: {
-            iFrameEnabled: false,
+            iFrameAllowed: false,
         },
         pages: {
             home: {

@@ -30,7 +30,7 @@ function Content() {
     return <ErrorBoundary content={content} />;
 }
 
-function Placeholder() {
+function IFramePlaceholder() {
     return <div>iFrame is not allowed</div>;
 }
 
@@ -42,8 +42,8 @@ export default function App() {
             return true;
         }
     })();
-    if (isIFrame && !APP_CONFIGURATION.app.iFrameEnabled) {
-        return <Placeholder />;
+    if (isIFrame && !APP_CONFIGURATION.app.iFrameAllowed) {
+        return <IFramePlaceholder />;
     }
     return <Content />;
 }
