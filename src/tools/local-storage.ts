@@ -43,6 +43,59 @@ function writeToStorage<Value>(
     }
 }
 
+type StorageListener<Value> = (value: Value | null) => void;
+
+class StorageSyncRegistry {
+    private static instance: StorageSyncRegistry | null = null;
+    private listeners = new Map<string, Set<StorageListener<unknown>>>();
+
+    private constructor() {}
+
+    static getInstance(): StorageSyncRegistry {
+        if (!StorageSyncRegistry.instance) {
+            StorageSyncRegistry.instance = new StorageSyncRegistry();
+        }
+        return StorageSyncRegistry.instance;
+    }
+
+    subscribe<Value>(
+        storageType: "local" | "session",
+        key: string,
+        listener: StorageListener<Value>
+    ): () => void {
+        const targetKey = this.getTargetKey(storageType, key);
+        const listeners =
+            this.listeners.get(targetKey) ??
+            new Set<StorageListener<unknown>>();
+        listeners.add(listener as StorageListener<unknown>);
+        this.listeners.set(targetKey, listeners);
+
+        return () => {
+            listeners.delete(listener as StorageListener<unknown>);
+            if (listeners.size === 0) {
+                this.listeners.delete(targetKey);
+            }
+        };
+    }
+
+    notify<Value>(
+        storageType: "local" | "session",
+        key: string,
+        value: Value | null
+    ): void {
+        const targetKey = this.getTargetKey(storageType, key);
+        const listeners = this.listeners.get(targetKey);
+        listeners?.forEach(listener => listener(value));
+    }
+
+    private getTargetKey(
+        storageType: "local" | "session",
+        key: string
+    ): string {
+        return `${storageType}:${key}`;
+    }
+}
+
 function useStorage<Value = string>(
     storageType: "local" | "session",
     key: string
@@ -69,19 +122,23 @@ function useStorage<Value = string>(
         const result = writeToStorage(storage, key, value);
         if (!result) return false;
         setData(value);
+        StorageSyncRegistry.getInstance().notify(storageType, key, value);
         return true;
     };
 
     useEffect(() => {
         if (!storage) return;
-        const handler = (event: StorageEvent) => {
-            if (event.key === key && event.storageArea === storage) {
-                setData(readFromStorage(storage, key));
+
+        const unsubscribe = StorageSyncRegistry.getInstance().subscribe(
+            storageType,
+            key,
+            (nextValue: Value | null) => {
+                setData(nextValue);
             }
-        };
-        window.addEventListener("storage", handler);
-        return () => window.removeEventListener("storage", handler);
-    }, [key, storage]);
+        );
+
+        return unsubscribe;
+    }, [key, storage, storageType]);
 
     return [data, setValue];
 }
