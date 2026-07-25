@@ -7,10 +7,10 @@ interface Item<Value> {
 
 function isItem(obj: any): obj is Item<any> {
     if (typeof obj === "object" && !Array.isArray(obj) && obj !== null) {
-        return ![
+        return [
             "value" in obj,
             "timestamp" in obj ? typeof obj.timestamp === "number" : true,
-        ].includes(false);
+        ].every(value => value);
     }
     return false;
 }
@@ -19,7 +19,7 @@ function readFromStorage<Value>(storage: Storage, key: string): Value | null {
     try {
         const data = storage.getItem(key);
         if (typeof data !== "string") return null;
-        const parsed = JSON.parse(atob(data));
+        const parsed = JSON.parse(data);
         return isItem(parsed) ? parsed.value : null;
     } catch {
         return null;
@@ -34,9 +34,9 @@ function writeToStorage<Value>(
     try {
         const item: Item<Value> = {
             value,
+            timestamp: Date.now(),
         };
-        const data = btoa(JSON.stringify(item));
-        storage.setItem(key, data);
+        storage.setItem(key, JSON.stringify(item));
         return true;
     } catch {
         return false;

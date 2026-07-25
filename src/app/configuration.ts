@@ -9,6 +9,11 @@ function getAppConfiguration(
         app: {
             iFrameEnabled: false,
         },
+        pages: {
+            home: {
+                url: "/",
+            },
+        },
     };
 }
 

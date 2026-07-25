@@ -1,6 +1,6 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NotFoundPage from "../pages/not-found/NotFoundPage";
-import MainPage, { MAIN_PAGE_URL } from "../pages/main/MainPage";
+import MainPage from "../pages/main/MainPage";
 import { Helmet } from "react-helmet";
 import ErrorBoundary from "../error/ErrorBoundary";
 import { ENV } from "../../app/env";
@@ -12,7 +12,7 @@ function Content() {
         <>
             <BrowserRouter>
                 <Switch>
-                    <Route exact path={MAIN_PAGE_URL}>
+                    <Route exact path={APP_CONFIGURATION.pages.home.url}>
                         <MainPage />
                     </Route>
                     <Route>
