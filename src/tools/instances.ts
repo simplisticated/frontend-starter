@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "./state";
 
+const UNIQUE_IDENTIFIER = new Date().getTime().toString();
 const CONFIRMATION_INTERVAL = 500;
 const REMOVAL_INTERVAL = 2000;
 
@@ -22,37 +23,33 @@ interface Response {
 }
 
 export function useInstances(componentId: string): Response {
-    const uniqueIdentifier = useState<string>(() =>
-        new Date().getTime().toString()
-    )[0];
     const [state, setState] = useState<State>(
         { instances: [] },
         getStorageKey(componentId),
         "local"
     );
+    const getInstanceById = (id: string): Instance | null => {
+        return state.instances.find(instance => instance.id === id) ?? null;
+    };
     const addInstance = (instance: Instance): void => {
-        setState(prevState => {
-            if (prevState.instances.some(item => item.id === instance.id)) {
-                return prevState;
-            }
-            return {
+        const existingInstance = getInstanceById(instance.id);
+        if (!existingInstance) {
+            setState(prevState => ({
                 instances: [...prevState.instances, instance],
-            };
-        });
+            }));
+        }
     };
     const confirmInstanceById = (id: string): void => {
-        setState(prevState => {
-            if (!prevState.instances.some(item => item.id === id)) {
-                return prevState;
-            }
-            return {
+        const instance = getInstanceById(id);
+        if (instance) {
+            setState(prevState => ({
                 instances: prevState.instances.map(instance =>
                     instance.id === id
                         ? { ...instance, confirmationTimestamp: Date.now() }
                         : instance
                 ),
-            };
-        });
+            }));
+        }
     };
     const removeInstanceById = (id: string): void => {
         setState(prevState => ({
@@ -62,51 +59,40 @@ export function useInstances(componentId: string): Response {
         }));
     };
     useEffect(() => {
-        setState(prevState => {
-            if (prevState.instances.some(item => item.id === uniqueIdentifier)) {
-                return prevState;
-            }
-            return {
-                instances: [
-                    ...prevState.instances,
-                    { id: uniqueIdentifier, confirmationTimestamp: Date.now() },
-                ],
-            };
-        });
-
-        const confirmationTimerIdentifier = setInterval(() => {
-            confirmInstanceById(uniqueIdentifier);
-        }, CONFIRMATION_INTERVAL);
-
-        const removalTimerIdentifier = setInterval(() => {
-            setState(prevState => {
-                const now = Date.now();
-                const instancesToRemove = prevState.instances
-                    .filter(
-                        instance =>
-                            now - instance.confirmationTimestamp >=
-                            REMOVAL_INTERVAL
-                    )
-                    .map(instance => instance.id);
-                if (instancesToRemove.length === 0) {
-                    return prevState;
-                }
-                console.log(`Instances to remove: ${instancesToRemove}`);
-                console.log(`Unique identifier: ${uniqueIdentifier}`);
-                return {
-                    instances: prevState.instances.filter(
-                        instance => !instancesToRemove.includes(instance.id)
-                    ),
-                };
+        const currentInstance = getInstanceById(UNIQUE_IDENTIFIER);
+        if (!currentInstance) {
+            addInstance({
+                id: UNIQUE_IDENTIFIER,
+                confirmationTimestamp: Date.now(),
             });
+        }
+        const confirmationTimerIdentifier = setInterval(() => {
+            confirmInstanceById(UNIQUE_IDENTIFIER);
+        }, CONFIRMATION_INTERVAL);
+        const removalTimerIdentifier = setInterval(() => {
+            const now = Date.now();
+            const instancesToRemove = state.instances
+                .filter(
+                    instance =>
+                        now - instance.confirmationTimestamp >= REMOVAL_INTERVAL
+                )
+                .map(instance => instance.id);
+            console.log(`Instances to remove: ${instancesToRemove}`);
+            console.log(`Unique identifier: ${UNIQUE_IDENTIFIER}`);
+            if (instancesToRemove.length > 0) {
+                setState(prevState => ({
+                    instances: prevState.instances.filter(instance =>
+                        instancesToRemove.includes(instance.id)
+                    ),
+                }));
+            }
         }, REMOVAL_INTERVAL);
-
         return () => {
             clearInterval(confirmationTimerIdentifier);
             clearInterval(removalTimerIdentifier);
-            removeInstanceById(uniqueIdentifier);
+            removeInstanceById(UNIQUE_IDENTIFIER);
         };
-    }, [componentId, confirmInstanceById, removeInstanceById, uniqueIdentifier]);
+    }, [componentId]);
     return {
         numberOfInstances: state.instances.length,
     };
