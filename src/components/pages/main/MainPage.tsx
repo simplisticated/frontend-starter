@@ -1,10 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "../../../tools/state";
-import { useInstances } from "../../../tools/instances";
 
 export default function MainPage() {
-    const [count, setCount] = useState<number>(150, "main-page-click-count");
-    const { numberOfInstances } = useInstances("main-page");
+    const [count, setCount] = useState<number>(0, "test");
     useEffect(() => {
         const interval = setInterval(() => {
             setCount(prevCount => prevCount + 1);
@@ -15,7 +13,13 @@ export default function MainPage() {
         <div>
             <h1>Главная страница</h1>
             <p>Счетчик: {count}</p>
-            <p>Экземпляры: {numberOfInstances}</p>
+            <button
+                onClick={() => {
+                    setCount(prev => prev + 1);
+                }}
+            >
+                Increase
+            </button>
         </div>
     );
 }

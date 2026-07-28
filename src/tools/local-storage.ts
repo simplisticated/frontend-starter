@@ -150,6 +150,17 @@ export function useStorage<Value = string>(
         return unsubscribe;
     }, [key, storage, storageType]);
 
+    useEffect(() => {
+        const listener = (event: StorageEvent) => {
+            if (event.key !== key) return;
+            if (!storage) return null;
+            const data = readFromStorage<Value>(storage, key);
+            setData(data);
+        };
+        window.addEventListener("storage", listener);
+        return () => window.removeEventListener("storage", listener);
+    }, [key, storage]);
+
     return [data, setValue, updateFromStorage];
 }
 
