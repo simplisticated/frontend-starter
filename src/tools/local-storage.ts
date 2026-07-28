@@ -87,7 +87,7 @@ type ValueSetterParameter<Value> =
     | null
     | ((previousValue: Value | null) => Value | null);
 
-function useStorage<Value = string>(
+export function useStorage<Value = string>(
     storageType: "local" | "session",
     key: string
 ): [Value | null, (value: ValueSetterParameter<Value>) => boolean] {
@@ -111,15 +111,22 @@ function useStorage<Value = string>(
     const setValue = (value: ValueSetterParameter<Value>): boolean => {
         if (!storage) return false;
 
-        const nextValue =
-            typeof value === "function"
-                ? (value as (previousValue: Value | null) => Value | null)(data)
-                : value;
+        if (typeof value === "function") {
+            setData(prevData => {
+                const nextValue = (value as (
+                    previousValue: Value | null
+                ) => Value | null)(prevData);
+                writeToStorage(storage, key, nextValue);
+                STORAGE_SYNC_MANAGER.notify(storageType, key, nextValue);
+                return nextValue;
+            });
+            return true;
+        }
 
-        const result = writeToStorage(storage, key, nextValue);
+        const result = writeToStorage(storage, key, value);
         if (!result) return false;
-        setData(nextValue);
-        STORAGE_SYNC_MANAGER.notify(storageType, key, nextValue);
+        setData(value);
+        STORAGE_SYNC_MANAGER.notify(storageType, key, value);
         return true;
     };
 
