@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "./state";
 
 const CURRENT_INSTANCE_IDENTIFIER = new Date().getTime().toString();
-const CONFIRMATION_INTERVAL = 500;
+const CONFIRMATION_INTERVAL = 200;
 const REMOVAL_INTERVAL = 1000;
 
 function getStorageKey(componentId: string): string {
@@ -23,15 +23,24 @@ interface Response {
 }
 
 export function useInstances(componentId: string): Response {
-    const [state, setState] = useState<State>(
+    const [state, setState, updateFromStorage] = useState<State>(
         { instances: [] },
         getStorageKey(componentId),
         "local"
     );
+    const stateRef = useRef(state);
+    useEffect(() => {
+        stateRef.current = state;
+    }, [state]);
     const getInstanceById = (id: string): Instance | null => {
-        return state.instances.find(instance => instance.id === id) ?? null;
+        updateFromStorage();
+        return (
+            stateRef.current.instances.find(instance => instance.id === id) ??
+            null
+        );
     };
     const addInstance = (instance: Instance): void => {
+        updateFromStorage();
         const existingInstance = getInstanceById(instance.id);
         if (!existingInstance) {
             setState(prevState => ({
@@ -40,6 +49,7 @@ export function useInstances(componentId: string): Response {
         }
     };
     const confirmInstanceById = (id: string): void => {
+        updateFromStorage();
         const instance = getInstanceById(id);
         if (instance) {
             setState(prevState => ({
@@ -52,6 +62,7 @@ export function useInstances(componentId: string): Response {
         }
     };
     const removeInstancesById = (identifiers: string[]): void => {
+        updateFromStorage();
         setState(prevState => ({
             instances: prevState.instances.filter(
                 instance => !identifiers.includes(instance.id)
@@ -59,6 +70,7 @@ export function useInstances(componentId: string): Response {
         }));
     };
     useEffect(() => {
+        updateFromStorage();
         const currentInstance = getInstanceById(CURRENT_INSTANCE_IDENTIFIER);
         if (!currentInstance) {
             addInstance({
@@ -70,8 +82,9 @@ export function useInstances(componentId: string): Response {
             confirmInstanceById(CURRENT_INSTANCE_IDENTIFIER);
         }, CONFIRMATION_INTERVAL);
         const removalTimerIdentifier = setInterval(() => {
+            updateFromStorage();
             const now = Date.now();
-            const instancesToRemove = state.instances
+            const instancesToRemove = stateRef.current.instances
                 .filter(
                     instance =>
                         now - instance.confirmationTimestamp >= REMOVAL_INTERVAL

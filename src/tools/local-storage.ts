@@ -90,7 +90,7 @@ type ValueSetterParameter<Value> =
 export function useStorage<Value = string>(
     storageType: "local" | "session",
     key: string
-): [Value | null, (value: ValueSetterParameter<Value>) => boolean] {
+): [Value | null, (value: ValueSetterParameter<Value>) => boolean, () => void] {
     const storage = (() => {
         if (typeof window === "undefined") return null;
         switch (storageType) {
@@ -130,6 +130,12 @@ export function useStorage<Value = string>(
         return true;
     };
 
+    const updateFromStorage = () => {
+        if (!storage) return null;
+        const updatedValue = readFromStorage<Value>(storage, key);
+        setValue(updatedValue);
+    };
+
     useEffect(() => {
         if (!storage) return;
 
@@ -144,7 +150,7 @@ export function useStorage<Value = string>(
         return unsubscribe;
     }, [key, storage, storageType]);
 
-    return [data, setValue];
+    return [data, setValue, updateFromStorage];
 }
 
 export function useLocalStorage<Value = string>(key: string) {

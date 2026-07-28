@@ -10,8 +10,8 @@ export function useState<S>(
     initialState: S | (() => S),
     stateId?: string,
     store?: "local" | "session"
-): [S, Dispatch<SetStateAction<S>>] {
-    const [storageData, setStorageData] = useStorage<S>(
+): [S, Dispatch<SetStateAction<S>>, () => void] {
+    const [storageData, setStorageData, updateFromStorage] = useStorage<S>(
         store ?? "local",
         stateId ?? ""
     );
@@ -27,7 +27,7 @@ export function useState<S>(
     }, [initialState, stateId, store]);
 
     if (!hasStateId) {
-        return standard;
+        return [...standard, () => {}];
     }
 
     const initialValue =
@@ -48,5 +48,5 @@ export function useState<S>(
         });
     };
 
-    return [state, setter];
+    return [state, setter, updateFromStorage];
 }
