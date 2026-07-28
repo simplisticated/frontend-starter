@@ -19,13 +19,6 @@ export function useState<S>(
     const hasStateId = typeof stateId !== "undefined" && stateId.length > 0;
 
     useEffect(() => {
-        console.log("use effect", {
-            initialState,
-            stateId,
-            store,
-            storageData,
-            hasStateId,
-        });
         if (!storageData && hasStateId) {
             setStorageData(initialState);
             console.log("set storage data", { initialState, stateId, store });
@@ -45,7 +38,8 @@ export function useState<S>(
     const setter: Dispatch<SetStateAction<S>> = value => {
         setStorageData(prevStorageData => {
             const previousState =
-                prevStorageData === null || typeof prevStorageData === "undefined"
+                prevStorageData === null ||
+                typeof prevStorageData === "undefined"
                     ? initialValue
                     : prevStorageData;
             return typeof value === "function"

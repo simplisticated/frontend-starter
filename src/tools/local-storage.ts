@@ -113,9 +113,9 @@ export function useStorage<Value = string>(
 
         if (typeof value === "function") {
             setData(prevData => {
-                const nextValue = (value as (
-                    previousValue: Value | null
-                ) => Value | null)(prevData);
+                const nextValue = (
+                    value as (previousValue: Value | null) => Value | null
+                )(prevData);
                 writeToStorage(storage, key, nextValue);
                 STORAGE_SYNC_MANAGER.notify(storageType, key, nextValue);
                 return nextValue;
