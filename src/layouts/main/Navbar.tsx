@@ -38,8 +38,8 @@ export function Navbar(props: Props) {
                         >
                             {props.navigation.map(item => (
                                 <NavLink
-                                    key={`${item.to}:${item.label}`}
-                                    to={item.to}
+                                    key={`${item.url}:${item.label}`}
+                                    to={item.url}
                                     exact={item.exact}
                                     activeClassName={activeLinkClassName}
                                     className={linkClassName}
@@ -108,8 +108,8 @@ export function Navbar(props: Props) {
                     <div className="mx-auto flex max-w-7xl flex-col gap-1">
                         {props.navigation.map(item => (
                             <NavLink
-                                key={`${item.to}:${item.label}`}
-                                to={item.to}
+                                key={`${item.url}:${item.label}`}
+                                to={item.url}
                                 exact={item.exact}
                                 activeClassName={activeLinkClassName}
                                 className={linkClassName}
@@ -127,7 +127,7 @@ export function Navbar(props: Props) {
 
 export interface NavigationItem {
     label: string;
-    to: string;
+    url: string;
     /** Включает точное совпадение URL, например для главной страницы. */
     exact?: boolean;
 }

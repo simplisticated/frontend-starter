@@ -15,6 +15,18 @@ function getAppConfiguration(environment: AppEnvironment) {
                 navbarTitle: "Главная",
                 url: "/",
             },
+            privacyPolicy: {
+                navbarTitle: "Политика конфиденциальности",
+                url: "/privacy-policy",
+            },
+            termsOfService: {
+                navbarTitle: "Пользовательское соглашение",
+                url: "/terms-of-service",
+            },
+        },
+        contacts: {
+            email: "",
+            telegram: "",
         },
     };
 }

@@ -1,5 +1,5 @@
 import { APP_CONFIGURATION } from "../../configuration/configuration";
-import { Footer } from "./Footer";
+import { Footer, FooterColumn, FooterSocialLink } from "./Footer";
 import { Navbar, type NavigationItem } from "./Navbar";
 
 export function MainLayout(props: Props) {
@@ -25,7 +25,10 @@ export function MainLayout(props: Props) {
                 {props.content}
             </main>
 
-            <Footer />
+            <Footer
+                columns={FOOTER_COLUMNS}
+                socialLinks={FOOTER_SOCIAL_LINKS}
+            />
         </div>
     );
 }
@@ -37,6 +40,33 @@ export interface Props {
 const NAVIGATION: NavigationItem[] = [
     {
         label: APP_CONFIGURATION.pages.home.navbarTitle,
-        to: APP_CONFIGURATION.pages.home.url,
+        url: APP_CONFIGURATION.pages.home.url,
+    },
+];
+
+const FOOTER_COLUMNS: FooterColumn[] = [
+    {
+        title: "Документы",
+        links: [
+            {
+                label: APP_CONFIGURATION.pages.termsOfService.navbarTitle,
+                url: APP_CONFIGURATION.pages.termsOfService.url,
+            },
+            {
+                label: APP_CONFIGURATION.pages.privacyPolicy.navbarTitle,
+                url: APP_CONFIGURATION.pages.privacyPolicy.url,
+            },
+        ],
+    },
+];
+
+const FOOTER_SOCIAL_LINKS: FooterSocialLink[] = [
+    {
+        label: "Email",
+        url: APP_CONFIGURATION.contacts.email,
+    },
+    {
+        label: "Telegram",
+        url: APP_CONFIGURATION.contacts.telegram,
     },
 ];
