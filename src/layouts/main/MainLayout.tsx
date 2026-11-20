@@ -1,4 +1,4 @@
-import { APP_CONFIGURATION } from "../../app/configuration";
+import { APP_CONFIGURATION } from "../../configuration/configuration";
 import { Footer } from "./Footer";
 import { Navbar, type NavigationItem } from "./Navbar";
 

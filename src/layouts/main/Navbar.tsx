@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { APP_CONFIGURATION } from "../../app/configuration";
+import { APP_CONFIGURATION } from "../../configuration/configuration";
 
 export function Navbar(props: Props) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

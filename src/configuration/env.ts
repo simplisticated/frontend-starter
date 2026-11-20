@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import { isAppEnvironment } from "./app-environment";
 
 function getString(key: string): string | null {

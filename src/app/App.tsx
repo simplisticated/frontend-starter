@@ -1,12 +1,12 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { MainLayout } from "../layouts/main/MainLayout";
+import { MainPage } from "../pages/main/MainPage";
+import { NotFoundPage } from "../pages/not-found/NotFoundPage";
+import { AppEnvironment } from "../configuration/app-environment";
+import { APP_CONFIGURATION } from "../configuration/configuration";
+import { ENV } from "../configuration/env";
 import ErrorBoundary from "./ErrorBoundary";
-import { ENV } from "../../app/env";
-import { AppEnvironment } from "../../app/app-environment";
-import { APP_CONFIGURATION } from "../../app/configuration";
-import { MainLayout } from "../../layouts/main/MainLayout";
-import { MainPage } from "../../pages/main/MainPage";
-import { NotFoundPage } from "../../pages/not-found/NotFoundPage";
 
 function Content() {
     const content = (

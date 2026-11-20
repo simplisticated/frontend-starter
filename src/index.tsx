@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import App from "./components/app/App";
+import App from "./app/App";
 import { getOrCreateUserIdentifier } from "./tools/user-identifier";
 
 ReactDOM.render(

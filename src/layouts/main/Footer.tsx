@@ -1,4 +1,4 @@
-import { APP_CONFIGURATION } from "../../app/configuration";
+import { APP_CONFIGURATION } from "../../configuration/configuration";
 
 export function Footer() {
     return (
