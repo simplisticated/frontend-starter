@@ -6,18 +6,9 @@
         "build": "node ./package_scripts/delete-build-folder.js && react-scripts build",
         "start": "serve -s build -l 3000",
         "start:dev": "react-scripts start",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "lint": "eslint --ext .js,.jsx,.ts,.tsx . && prettier --check .",
-        "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
-        "format": "prettier --write .",
-        "check": "npm run build && npm run lint && npm run test"
+        "format": "prettier --write ."
     },
     "dependencies": {
-        "axios": "0.24.0",
-        "es5-ext": "0.10.53",
-        "mobx": "6.3.9",
-        "mobx-react": "7.2.1",
         "react": "17.0.1",
         "react-dom": "17.0.1",
         "react-helmet": "6.1.0",
@@ -26,27 +17,19 @@
         "uuid": "8.3.2",
         "web-vitals": "1.0.1"
     },
+    "overrides": {
+        "es5-ext": "0.10.53"
+    },
     "devDependencies": {
-        "@testing-library/jest-dom": "5.11.4",
-        "@testing-library/react": "11.1.0",
-        "@testing-library/user-event": "12.1.10",
-        "@types/jest": "26.0.15",
-        "@types/mixpanel-browser": "2.51.0",
         "@types/node": "12.0.0",
         "@types/react": "17.0.0",
         "@types/react-dom": "17.0.0",
         "@types/react-helmet": "6.1.11",
         "@types/react-router-dom": "5.3.1",
         "@types/uuid": "10.0.0",
-        "@typescript-eslint/eslint-plugin": "^8.35.1",
-        "@typescript-eslint/parser": "^8.35.1",
-        "eslint": "^8.57.1",
-        "eslint-config-prettier": "10.1.5",
-        "eslint-plugin-react": "^7.37.5",
-        "eslint-plugin-react-hooks": "^5.2.0",
-        "prettier": "3.6.2",
+        "prettier": "2.5.1",
         "serve": "13.0.2",
-        "typescript": "5.9.3"
+        "typescript": "6.0.3"
     },
     "browserslist": {
         "production": [

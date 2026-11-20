@@ -23,7 +23,6 @@ export function useState<S>(
             setStorageData(initialState);
             console.log("set storage data", { initialState, stateId, store });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialState, stateId, store]);
 
     if (!hasStateId) {

@@ -1,0 +1,45 @@
+:root {
+    color-scheme: dark;
+
+    --color-canvas: #0b1020;
+    --color-surface: #111a2c;
+    --color-surface-hover: #1b2940;
+    --color-surface-elevated: #1a263b;
+    --color-border: #29364b;
+
+    --color-content: #e5eaf3;
+    --color-muted: #a2aec1;
+
+    --color-accent: #a5b4fc;
+    --color-accent-strong: #818cf8;
+    --color-accent-surface: #26264a;
+}
+
+html {
+    min-width: 320px;
+    background: var(--color-canvas);
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background: var(--color-canvas);
+    color: var(--color-content);
+}
+
+#root {
+    min-height: 100vh;
+}
+
+::selection {
+    background: var(--color-accent-surface);
+    color: var(--color-content);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}

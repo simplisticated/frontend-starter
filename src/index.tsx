@@ -4,7 +4,6 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./components/app/App";
 import { getOrCreateUserIdentifier } from "./tools/user-identifier";
 
-// eslint-disable-next-line react/no-deprecated
 ReactDOM.render(
     <React.StrictMode>
         <App />

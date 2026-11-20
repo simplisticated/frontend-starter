@@ -1,11 +1,12 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import NotFoundPage from "../pages/not-found/NotFoundPage";
-import MainPage from "../pages/main/MainPage";
 import { Helmet } from "react-helmet";
-import ErrorBoundary from "../error/ErrorBoundary";
+import ErrorBoundary from "./ErrorBoundary";
 import { ENV } from "../../app/env";
 import { AppEnvironment } from "../../app/app-environment";
 import { APP_CONFIGURATION } from "../../app/configuration";
+import { MainLayout } from "../../layouts/main/MainLayout";
+import { MainPage } from "../../pages/main/MainPage";
+import { NotFoundPage } from "../../pages/not-found/NotFoundPage";
 
 function Content() {
     const content = (
@@ -13,10 +14,10 @@ function Content() {
             <BrowserRouter>
                 <Switch>
                     <Route exact path={APP_CONFIGURATION.pages.home.url}>
-                        <MainPage />
+                        <MainLayout content={<MainPage />} />
                     </Route>
                     <Route>
-                        <NotFoundPage />
+                        <MainLayout content={<NotFoundPage />} />
                     </Route>
                 </Switch>
             </BrowserRouter>

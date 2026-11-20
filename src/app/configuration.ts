@@ -1,16 +1,18 @@
 import { AppEnvironment } from "./app-environment";
 import { ENV } from "./env";
 
-function getAppConfiguration(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    environment: AppEnvironment
-) {
+function getAppConfiguration(environment: AppEnvironment) {
     return {
+        brand: {
+            name: "Frontend Starter",
+            url: "/",
+        },
         app: {
             iFrameAllowed: false,
         },
         pages: {
             home: {
+                navbarTitle: "Главная",
                 url: "/",
             },
         },
